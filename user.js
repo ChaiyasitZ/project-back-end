@@ -1,17 +1,22 @@
-const db = require('./db');
+const prisma = require("./prisma/prisma");
+class User {
+    static async createUser(username, email, password) {
+        return prisma.user.create({
+            data: {
+                username,
+                email,
+                password,
+            },
+        });
+    }
 
-function createUser(username, email, hashedPassword) {
-    return db.one(
-        'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
-        [username, email, hashedPassword]
-    );
+    static async findUserByUsername(username) {
+        return prisma.user.findUnique({
+            where: {
+                username,
+            },
+        });
+    }
 }
 
-function findUserByUsername(username) {
-    return db.oneOrNone('SELECT * FROM users WHERE username = $1', [username]);
-}
-
-module.exports = {
-    createUser,
-    findUserByUsername,
-};
+module.exports = user;
