@@ -12,8 +12,8 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement()) // description: "Unique identifier"
+  id       Int      @id @default(autoincrement()) 
   username String   @unique
-  email    String   @unique // 
-  password String   @default("") // description: "Hashed password"
+  email    String   @unique 
+  password String   
 }
